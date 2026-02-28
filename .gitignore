@@ -5,6 +5,7 @@ venv/
 .env
 
 # Backend
+venv/
 backend/venv/
 
 # Node
