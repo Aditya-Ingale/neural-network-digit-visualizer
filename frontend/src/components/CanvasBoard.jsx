@@ -69,7 +69,6 @@ export default function CanvasBoard(){
                 downscaled.push(avg);
             }
         }
-        console.log("Download length inside:", downscaled.length);
         return downscaled;
     };
 
