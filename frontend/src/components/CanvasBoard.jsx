@@ -4,7 +4,9 @@ import { predictDigit } from "../services/api";
 export default function CanvasBoard({setPrediction}){
     const canvasRef = useRef(null);
     const isDrawingRef = useRef(false);
-    const debounceRef = useRef(null);
+    // const debounceRef = useRef(null);
+    const requestIdRef = useRef(0);
+    const lastPredictionTimeRef = useRef(0);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -103,7 +105,7 @@ export default function CanvasBoard({setPrediction}){
         }
     };
 
-    const draw = (e) => {
+    const draw = async (e) => {
     if (!isDrawingRef.current) return;
 
     const canvas = canvasRef.current;
@@ -116,21 +118,29 @@ export default function CanvasBoard({setPrediction}){
     );
     ctx.stroke();
 
-    if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
+    const now = Date.now();
+
+    // Throttle: allow prediction every 120ms
+    if (now - lastPredictionTimeRef.current < 120) {
+        return;
     }
 
-    debounceRef.current = setTimeout(async () => {
-        const pixels = convertTo28x28();
-        const normalized = pixels.map(v => v / 255.0);
+    lastPredictionTimeRef.current = now;
 
-        try {
+    const currentRequestId = ++requestIdRef.current;
+
+    const pixels = convertTo28x28();
+    const normalized = pixels.map(v => v / 255.0);
+
+    try {
         const result = await predictDigit(normalized);
-        setPrediction(result);
-        } catch (err) {
+
+        if(currentRequestId === requestIdRef.current) {
+            setPrediction(result);
+        } 
+    } catch (err) {
         console.error(err);
-        }
-    }, 200);
+    }
     };
 
     const clearCanvas = () => {
