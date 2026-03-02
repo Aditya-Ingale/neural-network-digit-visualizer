@@ -9,8 +9,11 @@ def preprocess_input(image_array):
     #Ensure correct shape(28, 28)
     image = image.reshape(28, 28)
 
+    # add channel dimension for CNN
+    image = np.expand_dims(image, axis=-1) # (28, 28, 1)
+
     #Add batch dimension
-    image = np.expand_dims(image, axis=0)
+    image = np.expand_dims(image, axis=0) # (1, 28, 28, 1)
 
     return image
 
