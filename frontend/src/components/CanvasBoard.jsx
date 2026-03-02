@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect}  from "react";
 import { predictDigit } from "../services/api";
 
-export default function CanvasBoard(){
+export default function CanvasBoard({setPrediction}){
     const canvasRef = useRef(null);
-    const [isDrawing, setIsDrawing] = useState(false);
+    const isDrawingRef = useRef(false);
+    const debounceRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -73,28 +74,29 @@ export default function CanvasBoard(){
     };
 
     const startDrawing = (e) => {
-        setIsDrawing(true);
+    isDrawingRef.current = true;
 
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const rect = canvas.getBoundingClientRect();
 
-        const rect = canvas.getBoundingClientRect();
-
-        ctx.beginPath();
-        ctx.moveTo(
-            e.clientX - rect.left,
-            e.clientY - rect.top
-        );
+    ctx.beginPath();
+    ctx.moveTo(
+        e.clientX - rect.left,
+        e.clientY - rect.top
+    );
     };
 
     const stopDrawing = async (e) => {
-        setIsDrawing(false);
+        isDrawingRef.current = false;
 
         const pixels = convertTo28x28();
+
+        const normalized = pixels.map(v => v / 255.0);
         
         try{
-            const result = await predictDigit(pixels);
-            console.log("Prediction:", result);
+            const result = await predictDigit(normalized);
+            setPrediction(result);
         }
         catch(error){
             console.error(error);
@@ -102,22 +104,33 @@ export default function CanvasBoard(){
     };
 
     const draw = (e) => {
-        if(!isDrawing) return;
+    if (!isDrawingRef.current) return;
 
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const rect = canvas.getBoundingClientRect();
 
-        const rect = canvas.getBoundingClientRect();
-        ctx.lineTo(
-            e.clientX - rect.left,
-            e.clientY - rect.top
-        );
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(
-            e.clientX - rect.left,
-            e.clientY - rect.top
-        );
+    ctx.lineTo(
+        e.clientX - rect.left,
+        e.clientY - rect.top
+    );
+    ctx.stroke();
+
+    if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+    }
+
+    debounceRef.current = setTimeout(async () => {
+        const pixels = convertTo28x28();
+        const normalized = pixels.map(v => v / 255.0);
+
+        try {
+        const result = await predictDigit(normalized);
+        setPrediction(result);
+        } catch (err) {
+        console.error(err);
+        }
+    }, 200);
     };
 
     const clearCanvas = () => {

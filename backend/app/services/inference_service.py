@@ -9,9 +9,6 @@ def preprocess_input(image_array):
     #Ensure correct shape(28, 28)
     image = image.reshape(28, 28)
 
-    #Normalize
-    image = image / 255.0
-
     #Add batch dimension
     image = np.expand_dims(image, axis=0)
 
