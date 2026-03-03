@@ -1,6 +1,7 @@
 import {useState} from "react";
 import CanvasBoard from "./components/CanvasBoard";
 import ProbabilityBars from "./components/ProbabilityBars";
+import NeuralNetworkViz from "./components/NeuralNetworkViz";
 
 function App() {
   const [prediction, setPrediction] = useState(null);
@@ -31,8 +32,12 @@ function App() {
         <CanvasBoard setPrediction={setPrediction} />
 
         {prediction && (
-          <ProbabilityBars probabilities={prediction.probabilities} />
+          <>
+            <ProbabilityBars probabilities={prediction.probabilities} />
+            <NeuralNetworkViz prediction={prediction} />
+          </>
         )}
+
       </div>
 
       {prediction && (
