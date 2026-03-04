@@ -1,20 +1,26 @@
-export default function ProbabilityBars({ probabilities }) {
-  const maxIndex = probabilities.indexOf(Math.max(...probabilities));
+export default function ProbabilityBars({ prediction }) {
+
+  const probabilities = prediction?.probabilities || Array(10).fill(0);
+
+  const maxProb = Math.max(...probabilities);
+  const predictedIndex = probabilities.indexOf(maxProb);
 
   return (
     <div style={{ marginTop: "30px", width: "320px" }}>
-      {probabilities.map((prob, index) => {
-        const isActive = index === maxIndex;
+      {probabilities.map((prob, i) => {
+
+        const isActive = i === predictedIndex;
 
         return (
           <div
-            key={index}
+            key={i}
             style={{
               display: "flex",
               alignItems: "center",
               marginBottom: "8px"
             }}
           >
+            {/* Digit Label */}
             <div
               style={{
                 width: "20px",
@@ -22,9 +28,10 @@ export default function ProbabilityBars({ probabilities }) {
                 color: isActive ? "#00ff99" : "white"
               }}
             >
-              {index}
+              {i}
             </div>
 
+            {/* Bar Background */}
             <div
               style={{
                 flex: 1,
@@ -36,6 +43,7 @@ export default function ProbabilityBars({ probabilities }) {
                 overflow: "hidden"
               }}
             >
+              {/* Bar Fill */}
               <div
                 style={{
                   width: `${prob * 100}%`,
@@ -49,6 +57,7 @@ export default function ProbabilityBars({ probabilities }) {
               />
             </div>
 
+            {/* Percentage Text */}
             <div
               style={{
                 width: "60px",
