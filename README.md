@@ -7,7 +7,7 @@
 
 An interactive full-stack web application that lets users draw a digit (0–9) on a canvas and watch a Convolutional Neural Network predict it in real-time. Class probabilities, network activation, and model confidence all update live while drawing.
 
-> 🚀 **Live Demo:** _Coming soon — deployment in progress_
+> 🚀 **Live Demo:** [neural-network-digit-visualizer.vercel.app](https://neural-network-digit-visualizer.vercel.app)
 
 ---
 
