@@ -6,6 +6,5 @@ def load_model():
         os.path.dirname(__file__),
         "mnist_model.h5"
     )
-
     model = keras.models.load_model(model_path)
     return model
