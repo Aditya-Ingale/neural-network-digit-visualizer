@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import traceback
+import sys
 
 from app.model.model_loader import load_model
 from app.services.inference_service import predict_digit
@@ -18,7 +20,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = load_model()
+print("Starting model load...", flush=True)
+try:
+    model = load_model()
+    print("Model loaded successfully!", flush=True)
+except Exception as e:
+    print(f"ERROR loading model: {e}", flush=True)
+    traceback.print_exc()
+    sys.exit(1)
 
 @app.get("/health")
 def health():
