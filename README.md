@@ -13,8 +13,8 @@ An interactive full-stack web application that lets users draw a digit (0–9) o
 
 ## Demo
 
-> ![App Demo](assets/animation.gif)`
-> ![App Demo](assets/Opening.png)`
+> ![App Demo](assets/Animation.gif)`
+> ![App Demo](assets/opening.png)`
 > ![App Demo](assets/demo.png)`
 
 ---
