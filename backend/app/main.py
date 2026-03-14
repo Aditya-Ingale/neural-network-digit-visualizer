@@ -14,7 +14,10 @@ app = FastAPI(title="Neural Network Digit Visualizer API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://neural-network-digit-visualizer.vercel.app",
+        "http://localhost:5173"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
