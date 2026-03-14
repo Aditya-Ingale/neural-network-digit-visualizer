@@ -13,9 +13,18 @@ An interactive full-stack web application that lets users draw a digit (0–9) o
 
 ## Demo
 
-> ![App Demo](assets/Animation.gif)`
-> ![App Demo](assets/opening.png)`
-> ![App Demo](assets/demo.png)`
+![Real-time digit prediction](assets/Animation.gif)
+*Real-time CNN prediction — probability bars and network activation update live while drawing*
+
+---
+
+![Opening interface](assets/opening.png)
+*Dashboard on page load — 4-panel layout with canvas, probability bars, network visualization, and model decision*
+
+---
+
+![Digit prediction](assets/demo.png)
+*Live prediction — model predicts digit 8 with 91.5% confidence*
 
 ---
 
