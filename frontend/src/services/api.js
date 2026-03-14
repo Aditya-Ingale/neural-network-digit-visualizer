@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://neural-network-digit-visualizer.onrender.com";
 
 export async function predictDigit(imageArray){
     const response = await fetch(`${API_URL}/predict`, {
