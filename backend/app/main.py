@@ -8,19 +8,21 @@ from app.schemas.prediction_schema import (
     PredictionResponse
 )
 
-app = FastAPI(title="Nural Network Digit Visualizer API")
+app = FastAPI(title="Neural Network Digit Visualizer API")
 
-# Enable CORS (important for React later)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Later restrict in prediction
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Load model once at startup
 model = load_model()
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict(request: PredictionRequest):
