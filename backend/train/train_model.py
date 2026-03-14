@@ -102,12 +102,19 @@ model.compile(
 model.summary()
 
 model.fit(
+    model.fit(
     x_train,
     y_train,
-    epochs=5,
+    epochs=10,
     validation_data=(x_test, y_test)
 )
+)
 
-model.save("../app/model/mnist_model.keras")
+import os
 
-print("CNN Model saved successfully.")
+# Replace the last save line with this:
+model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "app", "model")
+os.makedirs(model_dir, exist_ok=True)
+model_path = os.path.join(model_dir, "mnist_model.h5")
+model.save(model_path)
+print(f"CNN Model saved at: {model_path}")
