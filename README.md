@@ -266,7 +266,7 @@ Building this project reinforced several engineering concepts beyond just ML:
 
 ## Author
 
-**Aditya** — [GitHub](https://github.com/Aditya-Ingale)
+**Aditya-Ingale** — [GitHub](https://github.com/Aditya-Ingale)
 
 ---
 
