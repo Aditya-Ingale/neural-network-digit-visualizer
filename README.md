@@ -23,7 +23,7 @@ An interactive full-stack web application that lets users draw a digit (0–9) o
 
 ---
 
-![Digit prediction](assets/demo.png)
+![Digit prediction](assets/demo1.png)
 *Live prediction — model predicts digit 4 with 97.7% confidence*
 
 ---
