@@ -1,72 +1,26 @@
 export default function ProbabilityBars({ prediction }) {
-
   const probabilities = prediction?.probabilities || Array(10).fill(0);
-
   const maxProb = Math.max(...probabilities);
   const predictedIndex = probabilities.indexOf(maxProb);
 
   return (
-    <div style={{ marginTop: "30px", width: "320px" }}>
+    <div style={{ width: "100%" }}>
       {probabilities.map((prob, i) => {
-
-        const isActive = i === predictedIndex;
-
+        const isActive = i === predictedIndex && maxProb > 0;
         return (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "8px"
-            }}
-          >
-            {/* Digit Label */}
-            <div
-              style={{
-                width: "20px",
-                fontWeight: isActive ? "bold" : "normal",
-                color: isActive ? "#00ff99" : "white"
-              }}
-            >
+          <div key={i} className="prob-row">
+            <div className={`prob-digit ${isActive ? "active" : ""}`}>
               {i}
             </div>
 
-            {/* Bar Background */}
-            <div
-              style={{
-                flex: 1,
-                background: "#333",
-                height: "18px",
-                marginLeft: "10px",
-                position: "relative",
-                borderRadius: "4px",
-                overflow: "hidden"
-              }}
-            >
-              {/* Bar Fill */}
+            <div className="prob-bar-track">
               <div
-                style={{
-                  width: `${prob * 100}%`,
-                  height: "100%",
-                  background: isActive ? "#00ff99" : "#555",
-                  transition: "width 0.15s ease-out",
-                  boxShadow: isActive
-                    ? "0 0 8px #00ff99"
-                    : "none"
-                }}
+                className={`prob-bar-fill ${isActive ? "active" : ""}`}
+                style={{ width: `${prob * 100}%` }}
               />
             </div>
 
-            {/* Percentage Text */}
-            <div
-              style={{
-                width: "60px",
-                textAlign: "right",
-                marginLeft: "8px",
-                fontWeight: isActive ? "bold" : "normal",
-                color: isActive ? "#00ff99" : "white"
-              }}
-            >
+            <div className={`prob-pct ${isActive ? "active" : ""}`}>
               {(prob * 100).toFixed(1)}%
             </div>
           </div>
