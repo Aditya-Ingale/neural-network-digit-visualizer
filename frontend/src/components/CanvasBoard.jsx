@@ -107,6 +107,26 @@ export default function CanvasBoard({ setPrediction }) {
     }
   };
 
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    };
+    startDrawing(mouseEvent);
+  };
+
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    };
+    draw(mouseEvent);
+  };
+
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -119,26 +139,29 @@ export default function CanvasBoard({ setPrediction }) {
   return (
     <div style={{ textAlign: "center", width: "100%" }}>
       <canvas
-        ref={canvasRef}
-        width={280}
-        height={280}
-        style={{
-          background: "black",
-          border: "1px solid #1e293b",
-          borderRadius: "8px",
-          cursor: "crosshair",
-          display: "block",
-          width: "100%",
-          maxWidth: "260px",
-          height: "auto",
-          margin: "0 auto",
-          touchAction: "none",
-        }}
-        onMouseDown={startDrawing}
-        onMouseUp={stopDrawing}
-        onMouseMove={draw}
-        onMouseLeave={stopDrawing}
-      />
+      ref={canvasRef}
+      width={280}
+      height={280}
+      style={{
+        background: "black",
+        border: "1px solid #1e293b",
+        borderRadius: "8px",
+        cursor: "crosshair",
+        display: "block",
+        width: "100%",
+        maxWidth: "260px",
+        height: "auto",
+        margin: "0 auto",
+        touchAction: "none",
+      }}
+      onMouseDown={startDrawing}
+      onMouseUp={stopDrawing}
+      onMouseMove={draw}
+      onMouseLeave={stopDrawing}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={stopDrawing}
+    />
       <button onClick={clearCanvas} className="clear-btn">
         Clear
       </button>
